@@ -1,0 +1,56 @@
+.volunteersSection {
+  background-color: #f0f0f0;
+  padding: 40px 20px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mainTitle {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.volunteersGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+
+}
+
+.volunteerCard {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;
+  width: 320px;
+}
+
+.volunteerImage {
+  object-fit: cover;
+  min-width: 400px;
+  min-height: 300px;
+}
+
+.volunteerName {
+  font-size: 18px;
+  color: #333;
+  margin: 15px 0 10px;
+  padding: 10px;
+}
+
+.volunteerRole {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  padding: 10px;
+}

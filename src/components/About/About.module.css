@@ -1,0 +1,123 @@
+.about {
+  padding: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+
+.imageSection {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  max-width: 400px;
+  width: 100%;
+}
+
+.aboutImage{
+   width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+
+.textSection {
+  max-width: 500px;
+  animation: fadeIn 1.4s ease-in;
+}
+
+.subtitle {
+  color: #4b5563;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.title {
+  color: #111827;
+  font-size: 2.25rem;
+  line-height: 1.25;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  color: #6b7280;
+  margin-bottom: 2rem;
+  max-width: 50rem;
+  line-height: 1.75;
+}
+
+.list {
+  color: #6b7280;
+  margin-bottom: 2.5rem;
+  max-width: 28rem;
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  color: #9ca3af;
+}
+
+.button {
+  background-color: #ffb200;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #eab308;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 768px){
+  .about{
+    flex-direction: row;
+    padding: 6rem 3rem;
+    gap: 6rem;
+  }
+  .imageSection{
+    max-width: none;
+    width: 480px;
+  }
+  .title{
+     font-size: 3rem;
+  }
+}

@@ -1,0 +1,102 @@
+.contactContainer {
+  padding: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.formDetails{
+  width: 36rem;
+  animation: fadeIn 1.4s ease-in;
+}
+
+.imageContainer {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  max-width: 400px;
+  width: 100%;
+}
+
+.contactImage{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+
+
+.headers {
+  width: 100%;
+  animation: fadeIn 1.4s ease-in;
+}
+
+.subtitle {
+  color: #4b5563;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.title {
+  color: #111827;
+  font-size: 2.25rem;
+  line-height: 1.25;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formContainer input{
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    border: none;
+    background-color: #f1f0ec;
+}
+
+.formContainer textarea{
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    border: none;
+    background-color: #f1f0ec;
+    height: 10rem;
+}
+
+.formBtn {
+  background-color: #ffb200;
+  color: #04462a;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.6rem 1.6rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 9rem;
+}
+
+.formBtn:hover {
+  background-color: #ffc956;
+}
+
+@media (min-width: 768px){
+  .contactContainer{
+     flex-direction: row;
+    padding: 6rem 3rem;
+    gap: 6rem;
+  }
+  .imageContainer{
+    max-width: none;
+    width: 480px;
+  }
+  .title{
+    font-size: 3rem;
+  }
+}

@@ -1,0 +1,104 @@
+.footer {
+  background-color: #020804;
+  color: white;
+  font-family: serif;
+}
+
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sectionTitle {
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.chevron {
+  transition: transform 0.3s ease;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.socialIcons a {
+  background-color: #f3f1f1;
+  color: #020804;
+  text-decoration: none;
+  border-radius: 9999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #444;
+  margin: 2rem 0;
+}
+
+.contactList {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: #d1d5db;
+  font-size: 0.875rem;
+  max-width: 50rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon {
+  color: #eab308; /* yellow-600 equivalent */
+}
+
+.linkList {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  max-width: 20rem;
+}
+
+.linkList li{
+  list-style-type: none;
+}
+
+.linkList li a{
+  text-decoration: none;
+  color: #9ca3af;
+}
+
+.footerBottom {
+  background-color: #071807;
+  border-top: 1px solid #4b5563;
+  padding: 1rem 0;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,59 @@
+.galleryContainer {
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.schoolSection{
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mainTitle {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.schoolGrid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.schoolCard {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 320px;
+}
+
+.schoolImage {
+  object-fit: cover;
+  min-width: 400px;
+  min-height: 300px;
+}
+
+.schoolTitle{
+  font-size: 18px;
+  color: #333;
+  margin: 15px 0 10px;
+}
+
+.schoolDescription {
+  margin: 20px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}

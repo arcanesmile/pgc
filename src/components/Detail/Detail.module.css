@@ -1,0 +1,72 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  min-height: 450px;
+  width: 100%;
+  min-width: 33.3%;
+  overflow: hidden;
+}
+
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.orangeOverlay {
+  background-color: rgba(255, 165, 0, 0.85);
+}
+
+.blueOverlay {
+  background-color: rgba(70, 130, 180, 0.85);
+}
+
+.greenOverlay {
+  background-color: rgba(2, 99, 45, 0.85);
+}
+
+.icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.link {
+  margin-top: 20px;
+  display: inline-block;
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.link:hover,
+.link:focus {
+  color: #dddddd;
+}
+
+
+@media (min-width: 768px) {
+  .cardContainer {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .card {
+    width: 30%;
+  }
+}

@@ -1,0 +1,61 @@
+.abtSlider{
+   background-color: hsl(125, 92%, 14%);
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+}
+
+.abt-slider-container {
+  color: white;
+  padding: 2.5rem;
+
+}
+
+.abt-text{
+    display: block;
+    margin: 0 auto 1rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.abt-text,
+.volunteer-image-container,
+.volunteer-name,
+.volunteer-role {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.abt-slider-container.show .abt-text,
+.abt-slider-container.show .volunteer-image-container,
+.abt-slider-container.show .volunteer-name,
+.abt-slider-container.show .volunteer-role {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slider-dots {
+  margin-top: 1rem;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #8bf799;
+}
+
+.volunteer-image {
+  border-radius: 50%;
+}

@@ -1,0 +1,86 @@
+.galleryPage {
+  background-color: white;
+}
+
+.header {
+  background-color: #f0efe9;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.link {
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+.link a {
+  text-decoration: underline;
+  color: inherit;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.button {
+  padding: 0.5rem 1.5rem;
+  font-size: 14px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  background-color: #efeeeb;
+  color: #12182f;
+  font-weight: 500;
+  transition: all 0.3s ease
+}
+
+.button:hover {
+  background-color: #04462a;
+  color: white;
+}
+
+.active {
+  background-color: #f89f0b;
+  color: white;
+  font-weight: 600;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.imageWrapper {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.image {
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.image:hover {
+  transform: scale(1.03);
+}

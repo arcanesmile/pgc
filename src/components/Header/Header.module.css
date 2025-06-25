@@ -1,0 +1,265 @@
+.header {
+  background-color: #04462a;
+  color: white;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid white;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.logo {
+  object-fit: contain;
+}
+
+.nav a{
+  text-decoration: none;
+}
+/* Desktop Navigation */
+.navList {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navList a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+  padding: 0.5rem 0;
+}
+
+.navList a:hover {
+  color: #ffb200;
+}
+
+.navList .active {
+  color: #ffb200;
+  border-bottom: 2px solid #ffb200;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+
+}
+
+.dropdownBtn {
+  background: none;
+  border: none;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.dropdownBtn:hover {
+  color: #ffb200;
+}
+
+.dropdownIcon {
+  font-size: 0.8rem;
+  transition: transform 0.3s;
+}
+
+.dropdownContent {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #04462a;
+  min-width: 200px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 0;
+  z-index: 1;
+}
+
+.dropdownContent li {
+  padding: 0.5rem 1rem;
+  list-style-type: none;
+}
+
+.dropdownContent a {
+  display: block;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+}
+
+.dropdownContent a:hover {
+  color: #ffb200;
+}
+
+/* Button Styles */
+.donateButton,
+.signOutButton,
+.desktopDonateButton {
+  background-color: #ffb200;
+  color: #04462a;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  z-index: 0;
+}
+
+.donateButton:hover,
+.signOutButton:hover ,
+.desktopDonateButton:hover {
+  background-color: #e69500;
+}
+
+/* Mobile Controls */
+.mobileControls {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+
+/* Mobile Menu */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  opacity: 1;
+  backdrop-filter: blur(5px);
+  padding: 2rem;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.mobileMenu.showMenu {
+  right: 0;
+}
+
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.menuHeader h2 {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.mobileMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobileMenu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+}
+
+.mobileMenu a:hover{
+  color: #ffb200;
+}
+
+.mobileMenu .active {
+  color: #ffb200;
+}
+
+.mobileDropdownContent {
+  padding-left: 3rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #1c7c29;
+}
+
+.signOutIcon {
+  color: #1c7c29;
+  width: 16px;
+}
+
+/* Menu Overlay */
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .mobileControls {
+    display: flex;
+  }
+
+  .navList{
+    display: none;
+  }
+
+  .desktopDonateButton{
+    display: none;
+  }
+
+}
+
+@media (min-width: 769px) {
+  .mobileControls,
+  .mobileMenu,
+  .menuOverlay {
+    display: none;
+  }
+}
