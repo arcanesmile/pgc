@@ -1,0 +1,33 @@
+/* app/support/page.module.css */
+.container {
+  max-width: 28rem; 
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem; 
+}
+
+.title {
+  font-size: 2rem; 
+  font-weight: 700; 
+  margin-bottom: 1.5rem; 
+  text-align: center;
+}
+
+.card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem; 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+}
+
+.subtitle {
+  font-size: 1.5rem; 
+  font-weight: 600; 
+  margin-bottom: 1rem; 
+}
+
+.description {
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
