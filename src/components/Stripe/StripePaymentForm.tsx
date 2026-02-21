@@ -1,7 +1,7 @@
 // components/StripePaymentForm.tsx
 'use client';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './StripePaymentForm.module.css';
 
 export default function StripePaymentForm() {
@@ -10,8 +10,22 @@ export default function StripePaymentForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [amount, setAmount] = useState<number>(10); // Default $10
+  const [amount, setAmount] = useState<string>('10'); // Store as string initially
   const [email, setEmail] = useState<string>('');
+
+  // Parse amount safely
+  const parseAmount = (value: string): number => {
+    const parsed = parseFloat(value);
+    return isNaN(parsed) || parsed < 1 ? 10 : parsed; // Default to $10 if invalid
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Allow only numbers and one decimal point
+    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      setAmount(value);
+    }
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -21,8 +35,10 @@ export default function StripePaymentForm() {
     setError(null);
 
     try {
+      const parsedAmount = parseAmount(amount);
+      
       // Convert dollars to cents
-      const amountInCents = Math.round(amount * 100);
+      const amountInCents = Math.round(parsedAmount * 100);
 
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
@@ -32,6 +48,10 @@ export default function StripePaymentForm() {
           email: email 
         }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to create payment intent');
+      }
 
       const { clientSecret } = await response.json();
 
@@ -51,12 +71,15 @@ export default function StripePaymentForm() {
         setSuccess(true);
       }
     } catch (err) {
-      setError('Payment processing failed');
+      setError(err instanceof Error ? err.message : 'Payment processing failed');
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
+
+  // Get parsed amount for display
+  const parsedAmount = parseAmount(amount);
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -72,6 +95,7 @@ export default function StripePaymentForm() {
           className={styles.input}
           placeholder="your@email.com"
           required
+          disabled={loading}
         />
       </div>
 
@@ -79,55 +103,84 @@ export default function StripePaymentForm() {
         <label htmlFor="amount" className={styles.label}>
           Donation Amount ($)
         </label>
-        <input
-          id="amount"
-          type="number"
-          min="1"
-          step="0.01"
-          value={amount}
-          onChange={(e) => setAmount(parseFloat(e.target.value))}
-          className={styles.input}
-          placeholder="10.00"
-          required
-        />
+        <div className={styles.currencyInput}>
+          <span className={styles.currencySymbol}>$</span>
+          <input
+            id="amount"
+            type="text" // Changed to text for better control
+            inputMode="decimal"
+            value={amount}
+            onChange={handleAmountChange}
+            onBlur={() => {
+
+              const parsed = parseAmount(amount);
+              setAmount(parsed.toFixed(2));
+            }}
+            className={styles.input}
+            placeholder="10.00"
+            required
+            disabled={loading}
+          />
+        </div>
+        <small className={styles.helpText}>
+          Minimum donation: $1.00
+        </small>
       </div>
 
       <div className={styles.cardElementContainer}>
-        <CardElement options={{
-          style: {
-            base: {
-              fontSize: '16px',
-              color: '#424770',
-              '::placeholder': { color: '#aab7c4' },
+        <label className={styles.label}>Card Details</label>
+        <CardElement 
+          options={{
+            style: {
+              base: {
+                fontSize: '16px',
+                color: '#424770',
+                '::placeholder': { color: '#aab7c4' },
+                padding: '10px',
+              },
+              invalid: {
+                color: '#9e2146',
+              },
             },
-            invalid: {
-              color: '#9e2146',
-            },
-          },
-        }} />
+            hidePostalCode: true,
+          }} 
+        />
       </div>
 
-      {error && <div className={styles.error}>{error}</div>}
+      {error && (
+        <div className={styles.error}>
+          <span className={styles.errorIcon}>⚠️</span>
+          {error}
+        </div>
+      )}
+      
       {success && (
         <div className={styles.success}>
-          Thank you for your ${amount} donation!
+          <div className={styles.successHeader}>
+            <span className={styles.successIcon}>🎉</span>
+            <strong>Thank You!</strong>
+          </div>
+          <p>Your donation of ${parsedAmount.toFixed(2)} has been received.</p>
+          <p className={styles.successNote}>
+            A receipt has been sent to your email.
+          </p>
         </div>
       )}
 
       <button
-  type="submit"
-  disabled={!stripe || loading}
-  className={styles.submitButton}
->
-  {loading ? (
-    <>
-      <span className={styles.loadingSpinner} />
-      Processing...
-    </>
-  ) : (
-    `Donate $${amount.toFixed(2)}`
-  )}
-</button>
+        type="submit"
+        disabled={!stripe || loading || !email}
+        className={styles.submitButton}
+      >
+        {loading ? (
+          <>
+            <span className={styles.loadingSpinner} />
+            Processing...
+          </>
+        ) : (
+          `Donate $${parsedAmount.toFixed(2)}`
+        )}
+      </button>
     </form>
   );
 }

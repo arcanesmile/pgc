@@ -1,69 +1,75 @@
-import Image from 'next/image';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import ReactMarkdown from 'react-markdown';
-import { BlogPost } from '../../../types/blog';
-import styles from './blogPost.module.css';
+// app/blog/[slug]/page.tsx
+import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import styles from './blog-post.module.css';
+import NotionContentRenderer from '@/components/blog/NotionContentRenderer';
 
-export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), 'src/content/blog')
-  const fileNames = fs.readdirSync(postsDirectory)
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/${params.slug}`);
+  const post = await response.json();
   
-  return fileNames.map(fileName => ({
-    slug: fileName.replace(/\.md$/, '')
-  }))
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      images: [post.coverImage],
+    },
+  };
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/${params.slug}`, {
+    next: { revalidate: 60 }
+  });
   
-  if (!post) {
-    return <div>Post not found</div>
-  }
+  if (!response.ok) notFound();
+  
+  const post = await response.json();
 
   return (
-    <div className={styles.blogPostContainer}>
-      <article className={styles.blogArticle}>
-        <h1 className={styles.blogPostTitle}>{post.title}</h1>
-        <div className={styles.blogPostMeta}>
-          <span className={styles.blogPostDate}>{post.date}</span>
-          {post.author && (
-            <span className={styles.blogPostAuthor}>By {post.author}</span>
+    <article className={styles.container}>
+      {post.coverImage && (
+        <div className={styles.heroImage}>
+          <img 
+            src={post.coverImage} 
+            alt={post.title}
+            className={styles.image}
+          />
+        </div>
+      )}
+      
+      <div className={styles.header}>
+        <div className={styles.breadcrumb}>
+          <a href="/blog">Blog</a>
+          <span> / </span>
+          <span>{post.title}</span>
+        </div>
+        
+        <h1 className={styles.title}>{post.title}</h1>
+        
+        <div className={styles.meta}>
+          <time dateTime={post.date} className={styles.date}>
+            {new Date(post.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+          
+          {post.tags.length > 0 && (
+            <div className={styles.tags}>
+              {post.tags.map((tag: string) => (
+                <span key={tag} className={styles.tag}>#{tag}</span>
+              ))}
+            </div>
           )}
         </div>
-        {post.image && (
-          <Image 
-            src={post.image} 
-            alt={post.title}
-            width={400}
-            height={400} 
-            className={styles.blogPostImage}
-          />
-        )}
-        <div className={styles.blogPostContent}>
-          <ReactMarkdown>{post.content}</ReactMarkdown>
-        </div>
-      </article>
-    </div>
-  )
-}
-
-function getPostBySlug(slug: string): BlogPost | null {
-  try {
-    const fullPath = path.join(process.cwd(), 'src/content/blog', `${slug}.md`)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data, content } = matter(fileContents)
-    
-    return {
-      slug,
-      title: data.title,
-      date: data.date,
-      excerpt: data.excerpt,
-      content,
-      ...data
-    } as BlogPost
-  } catch {
-    return null
-  }
+      </div>
+      
+      <div className={styles.content}>
+        <NotionContentRenderer content={post.content} />
+      </div>
+    </article>
+  );
 }

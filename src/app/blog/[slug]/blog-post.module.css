@@ -1,0 +1,87 @@
+/* app/blog/[slug]/blog-post.module.css */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.heroImage {
+    margin: -2rem -1rem 2rem;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.header {
+    margin-bottom: 3rem;
+}
+
+.breadcrumb {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+    color: #0070f3;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: #f0f0f0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.content {
+    line-height: 1.8;
+    font-size: 1.125rem;
+}
+
+.content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.content pre {
+    border-radius: 8px;
+    overflow-x: auto;
+}
