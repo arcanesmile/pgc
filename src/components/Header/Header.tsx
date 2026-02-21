@@ -15,6 +15,8 @@ export default function Header() {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const pathname = usePathname();
+  const isBlogActive = pathname === '/blog' || pathname.startsWith('/blog/');
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -69,7 +71,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link href="/blog" className={pathname === '/blog' ? styles.active : ''}>
+            <Link   href="/blog" className={isBlogActive ? styles.active : ''}>
               Blog
             </Link>
           </li>

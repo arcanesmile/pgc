@@ -1,0 +1,249 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    min-height: 100vh;
+}
+/* Article – narrower for readability */
+.article {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Cover image wrapper */
+.coverImageWrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin-bottom: 2.5rem;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.coverImage {
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.coverImageWrapper:hover .coverImage {
+    transform: scale(1.02);
+}
+
+/* Featured badge – absolutely positioned on the image */
+.featuredBadge {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+    color: #000;
+    padding: 0.5rem 1.25rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 12px rgba(255, 170, 0, 0.3);
+    z-index: 10;
+}
+
+.badgeIcon {
+    font-size: 1rem;
+}
+
+/* Title */
+.title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    letter-spacing: -0.025em;
+}
+
+/* Meta section – mimics list page */
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.meta span,
+.meta time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.metaIcon {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.author {
+    background: #f9fafb;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.date,
+.readTime {
+    color: #6b7280;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    background: #dbeafe;
+    color: #1e40af;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Excerpt */
+.excerpt {
+    border-left: 4px solid #e5e7eb;
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: #4b5563;
+    font-size: 1.125rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+/* Main content */
+.content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #374151;
+    margin-bottom: 3rem;
+}
+
+.content h1,
+.content h2,
+.content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.content h1 {
+    font-size: 2.5rem;
+}
+
+.content h2 {
+    font-size: 2rem;
+}
+
+.content h3 {
+    font-size: 1.5rem;
+}
+
+.content p {
+    margin-bottom: 1.5rem;
+}
+
+.content a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.content a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.content ul,
+.content ol {
+    margin: 1rem 0 1.5rem 1.5rem;
+}
+
+.content li {
+    margin-bottom: 0.5rem;
+}
+
+.content pre {
+    background: #f3f4f6;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.content code {
+    background: #f3f4f6;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #dc2626;
+}
+
+.content blockquote {
+    border-left: 4px solid #d1d5db;
+    padding-left: 1rem;
+    color: #6b7280;
+    font-style: italic;
+    margin: 1.5rem 0;
+}
+
+/* Tags – exactly as on list page */
+.postTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.postTag {
+    background: #f0f4ff;
+    color: #667eea;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+    cursor: default;
+}
+
+.postTag:hover {
+    transform: translateY(-2px);
+}
+
+/* No content fallback */
+.noContent {
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem 3rem;
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .coverImageWrapper {
+        height: 250px;
+    }
+
+    .meta {
+        gap: 1rem;
+        font-size: 0.875rem;
+    }
+}

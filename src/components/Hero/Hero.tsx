@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link'; // added
 import styles from './Hero.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -9,18 +10,21 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 const slides = [
   {
     image: '/pgc6.jpg',
-    title: 'When Purpose Is Not known,Abuse Is Inevitable',
+    title: 'When The Purpose Of A Thing Is Not known,Abuse Is Inevitable',
     subtitle: 'Helping Them Realize Purpose Today',
+    link: '/blog/when-purpose-is-not-known-abuse-is-inevitable', 
   },
   {
     image: '/pgc5.jpg',
     title: 'Provide Education For Every Child',
     subtitle: 'Give Them A Future',
+    link: '/blog',
   },
   {
     image: '/pgc7.jpg',
     title: 'Provide Bags,Books And Uniform',
     subtitle: 'Be The Reason Someone Smiles',
+    link: '/blog',
   },
 ];
 
@@ -42,7 +46,7 @@ export default function HeroSection() {
     setIndex((prev) => (prev + 1) % slides.length);
   };
 
-  const { image, title, subtitle } = slides[index];
+  const { image, title, subtitle, link } = slides[index];
 
   return (
     <div className={styles.heroContainer}>
@@ -61,7 +65,9 @@ export default function HeroSection() {
             <br />
             {title.split(' ').slice(-2).join(' ')}
           </h1>
-          <button className={styles.button}>Learn More</button>
+          <Link href={link} className={styles.button}>
+            Learn More
+          </Link>
         </div>
       </div>
       <button

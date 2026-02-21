@@ -1,0 +1,226 @@
+/* components/blog/NotionContentRenderer.module.css */
+
+.contentWrapper {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #1a1a1a;
+    /* 🔥 FIX: prevents invisible text due to parent styles */
+}
+
+/* Ensure global styles cannot override markdown text */
+.contentWrapper * {
+    color: inherit;
+}
+
+/* Headings */
+.h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 2.5rem 0 1.5rem;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+.h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    color: #1a1a1a;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: #1a1a1a;
+}
+
+/* Paragraphs */
+.p {
+    margin: 1.5rem 0;
+    line-height: 1.7;
+    color: #374151;
+}
+
+/* Lists */
+.ul,
+.ol {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.li {
+    margin: 0.75rem 0;
+    line-height: 1.6;
+}
+
+.li::marker {
+    color: #667eea;
+}
+
+/* Blockquotes */
+.blockquote {
+    border-left: 4px solid #667eea;
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: #4b5563;
+    position: relative;
+}
+
+.blockquote:before {
+    content: "❝";
+    font-size: 2rem;
+    color: #667eea;
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+}
+
+/* Code blocks */
+.codeBlock {
+    margin: 2.5rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.codeHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background: #1e1e1e;
+    color: #e5e7eb;
+    font-size: 0.875rem;
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+}
+
+.languageTag {
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.copyButton {
+    background: transparent;
+    border: 1px solid #4b5563;
+    color: #e5e7eb;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copyButton:hover {
+    background: #374151;
+}
+
+.syntaxHighlighter {
+    margin: 0 !important;
+    padding: 1.25rem !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+}
+
+/* Inline code */
+.inlineCode {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #dc2626;
+    border: 1px solid #e5e7eb;
+}
+
+/* Tables */
+.tableWrapper {
+    overflow-x: auto;
+    margin: 2.5rem 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+}
+
+.table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+}
+
+.table tr:hover {
+    background: #f8fafc;
+}
+
+/* Links */
+.link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.link:hover {
+    color: #5a67d8;
+    border-bottom-color: #5a67d8;
+}
+
+.link:after {
+    content: "↗";
+    font-size: 0.75em;
+    margin-left: 0.25rem;
+    opacity: 0.7;
+}
+
+/* Images */
+.image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 2.5rem auto;
+    display: block;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .h1 {
+        font-size: 2rem;
+    }
+
+    .h2 {
+        font-size: 1.75rem;
+    }
+
+    .h3 {
+        font-size: 1.25rem;
+    }
+
+    .codeBlock {
+        border-radius: 8px;
+    }
+
+    .syntaxHighlighter {
+        font-size: 0.85rem !important;
+        padding: 1rem !important;
+    }
+}

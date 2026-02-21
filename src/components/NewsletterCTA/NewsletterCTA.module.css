@@ -1,0 +1,70 @@
+/* Newsletter Section */
+.newsletterSection {
+    background: linear-gradient(135deg, #04462a, #1b6b4a 10%, #51b189 100%);
+    border-radius: 20px;
+    padding: 4rem;
+    text-align: center;
+    color: white;
+    margin-top: 4rem;
+}
+
+.newsletterContent {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.newsletterIcon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.newsletterTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.newsletterText {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.newsletterForm {
+    display: flex;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.newsletterInput {
+    flex: 1;
+    padding: 0.875rem 1.25rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.newsletterInput:focus {
+    outline: none;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.newsletterButton {
+    padding: 0.875rem 2rem;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.newsletterButton:hover {
+    background: #000;
+}

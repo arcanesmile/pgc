@@ -1,75 +1,77 @@
-// app/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-import styles from './blog-post.module.css';
 import NotionContentRenderer from '@/components/blog/NotionContentRenderer';
+import Image from 'next/image';
+import { format } from 'date-fns';
+import styles from './blogpost.module.css';
+import Newsletter from '@/components/NewsletterCTA/NewsletterCTA';
 
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/${params.slug}`);
-  const post = await response.json();
-  
-  return {
-    title: post.title,
-    description: post.excerpt,
-    openGraph: {
-      images: [post.coverImage],
-    },
-  };
-}
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/blog/${slug}`,
+    { next: { revalidate: 3600 } }
+  );
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/${params.slug}`, {
-    next: { revalidate: 60 }
-  });
-  
-  if (!response.ok) notFound();
-  
-  const post = await response.json();
+  if (!res.ok) notFound();
+  const post = await res.json();
 
   return (
-    <article className={styles.container}>
-      {post.coverImage && (
-        <div className={styles.heroImage}>
-          <img 
-            src={post.coverImage} 
-            alt={post.title}
-            className={styles.image}
-          />
-        </div>
-      )}
-      
-      <div className={styles.header}>
-        <div className={styles.breadcrumb}>
-          <a href="/blog">Blog</a>
-          <span> / </span>
-          <span>{post.title}</span>
-        </div>
-        
+    <main className={styles.container}>  {/* ← Added container for consistent padding */}
+      <article className={styles.article}>
+        {post.coverImage && (
+          <div className={styles.coverImageWrapper}>
+            <img
+              src={post.coverImage}
+              alt={post.title}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+            {post.featured && (
+              <div className={styles.featuredBadge}>
+                <span className={styles.badgeIcon}>⭐</span>
+                Featured
+              </div>
+            )}
+          </div>
+        )}
+
         <h1 className={styles.title}>{post.title}</h1>
-        
+
         <div className={styles.meta}>
-          <time dateTime={post.date} className={styles.date}>
-            {new Date(post.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          </time>
-          
-          {post.tags.length > 0 && (
-            <div className={styles.tags}>
-              {post.tags.map((tag: string) => (
-                <span key={tag} className={styles.tag}>#{tag}</span>
-              ))}
-            </div>
-          )}
+          {post.author && <span>By {post.author}</span>}
+          {post.date && <span>{format(new Date(post.date), 'PPP')}</span>}
+          {post.readTime && <span>{post.readTime} read</span>}
+          {post.status && <span className={styles.status}>{post.status}</span>}
         </div>
-      </div>
-      
-      <div className={styles.content}>
-        <NotionContentRenderer content={post.content} />
-      </div>
-    </article>
+
+        {post.excerpt && (
+          <blockquote className={styles.excerpt}>{post.excerpt}</blockquote>
+        )}
+
+        <section className={styles.content}>
+          {post.blocks?.length > 0 ? (
+            <NotionContentRenderer blocks={post.blocks} />
+          ) : (
+            <p className={styles.noContent}>No content available.</p>
+          )}
+        </section>
+
+        {post.tags?.length > 0 && (
+          <div className={styles.postTags}>
+            {post.tags.map((tag: string) => (
+              <span key={tag} className={styles.postTag}>
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </article>
+
+      <Newsletter />
+    </main>
   );
 }
