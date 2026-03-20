@@ -1,5 +1,34 @@
 import { NextResponse } from "next/server";
 
+type RichTextProperty = {
+  title?: Array<{ plain_text?: string }>;
+  rich_text?: Array<{ plain_text?: string }>;
+};
+
+type MultiSelectProperty = { multi_select?: Array<{ name: string }> };
+
+type FileProperty = {
+  files?: Array<{
+    external?: { url?: string };
+    file?: { url?: string };
+  }>;
+};
+
+type NotionPage = {
+  id: string;
+  created_time?: string;
+  properties: {
+    Title?: RichTextProperty;
+    Slug?: RichTextProperty;
+    Excerpt?: RichTextProperty;
+    Tags?: MultiSelectProperty;
+    Author?: RichTextProperty;
+    Date?: { date?: { start?: string } };
+    Featured?: { checkbox?: boolean };
+    "Cover Image"?: FileProperty;
+  };
+};
+
 const NOTION_API_KEY = process.env.NOTION_API_KEY!;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
 
@@ -29,14 +58,14 @@ export async function GET() {
       return NextResponse.json([], { status: 500 });
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as { results: NotionPage[] };
 
-    const posts = data.results.map((page: any) => {
-      const getText = (prop: any) =>
-        prop?.title?.[0]?.plain_text ||
-        prop?.rich_text?.[0]?.plain_text ||
-        "";
+    const getText = (prop?: RichTextProperty) =>
+      prop?.title?.[0]?.plain_text ||
+      prop?.rich_text?.[0]?.plain_text ||
+      "";
 
+    const posts = data.results.map((page) => {
       const excerpt = getText(page.properties.Excerpt);
 
       const wordCount = Math.ceil(excerpt.length / 5);
@@ -51,8 +80,7 @@ export async function GET() {
         excerpt,
         date: page.properties.Date?.date?.start || page.created_time,
         coverImage: cover?.external?.url || cover?.file?.url || null,
-        tags:
-          page.properties.Tags?.multi_select?.map((t: any) => t.name) || [],
+        tags: page.properties.Tags?.multi_select?.map((t) => t.name) || [],
         author: getText(page.properties.Author) || "Unknown",
         readTime: `${readingTime} min read`,
         featured: page.properties.Featured?.checkbox || false,

@@ -1,7 +1,7 @@
 // components/StripePaymentForm.tsx
 'use client';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './StripePaymentForm.module.css';
 
 export default function StripePaymentForm() {

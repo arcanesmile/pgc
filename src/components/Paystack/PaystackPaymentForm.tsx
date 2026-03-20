@@ -14,22 +14,22 @@ import styles from './PaystackPaymentForm.module.css';
 declare global {
   interface Window {
     PaystackPop: {
-      setup: (options: any) => { openIframe: () => void };
+      setup: (options: PaystackOptions) => { openIframe: () => void };
     };
   }
 }
 
-interface PaystackConfig {
+type PaystackOptions = {
   key: string;
   email: string;
   amount: number; // Amount in kobo
   ref: string;
   currency?: string;
   channels?: string[];
-  callback: (response: any) => void;
+  callback: (response: { reference: string }) => void;
   onClose: () => void;
-  metadata?: Record<string, any>;
-}
+  metadata?: Record<string, unknown>;
+};
 
 export default function PaystackPaymentForm() {
   const [email, setEmail] = useState<string>('');
@@ -96,7 +96,7 @@ export default function PaystackPaymentForm() {
           }
         ]
       },
-      callback: (response: any) => {
+      callback: (response: { reference: string }) => {
         setSuccess(true);
         setLoading(false);
         

@@ -8,4 +8,4 @@ const UserSchema = new Schema({
 });
 
 export default mongoose.models.User ||
-mongoose.models('User',UserSchema);
+mongoose.model('User', UserSchema);

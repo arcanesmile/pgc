@@ -1,26 +1,43 @@
 import { cert, getApps, initializeApp } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
+import { getAuth, Auth } from 'firebase-admin/auth';
 
-if (!getApps().length) {
-  if (!process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
-    throw new Error('Missing Firebase Admin credentials');
+let initialized = false;
+
+const initFirebaseAdmin = () => {
+  if (initialized || getApps().length) {
+    initialized = true;
+    return;
   }
 
-  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+  const rawCredentials = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+  if (!rawCredentials) {
+    return;
+  }
+
+  const serviceAccount = JSON.parse(rawCredentials);
   serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
   initializeApp({
-    credential: cert(serviceAccount)
+    credential: cert(serviceAccount),
   });
-}
+  initialized = true;
+};
 
-export const adminAuth = getAuth();
+const getAdminAuth = (): Auth | null => {
+  initFirebaseAdmin();
+  return getApps().length ? getAuth() : null;
+};
 
-// Add this verifyToken function
 export const verifyToken = async (token: string) => {
+  const authInstance = getAdminAuth();
+  if (!authInstance) {
+    console.warn('Firebase Admin is not configured; token verification skipped.');
+    return null;
+  }
+
   try {
-    return await adminAuth.verifyIdToken(token);
-  } catch (error) {
+    return await authInstance.verifyIdToken(token);
+  } catch {
     return null;
   }
 };

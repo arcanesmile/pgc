@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import NotionContentRenderer from '@/components/blog/NotionContentRenderer';
-import type { NotionBlock } from '@/components/blog/NotionContentRenderer';
 import Image from 'next/image';
 import { format } from 'date-fns';
 import styles from './blogpost.module.css';
@@ -17,15 +16,15 @@ type BlogPost = {
   status?: string;
   featured?: boolean;
   coverImage?: string | null;
-  blocks?: NotionBlock[];
+  blocks?: unknown[];
 };
 
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_URL}/api/blog/${slug}`,
@@ -70,16 +69,16 @@ export default async function BlogPostPage({
         )}
 
         <section className={styles.content}>
-          {(post.blocks?.length ?? 0) > 0 ? (
-            <NotionContentRenderer blocks={post.blocks!} />
+          {post.blocks?.length > 0 ? (
+            <NotionContentRenderer blocks={post.blocks} />
           ) : (
             <p className={styles.noContent}>No content available.</p>
           )}
         </section>
 
-        {(post.tags?.length ?? 0) > 0 && (
+        {post.tags?.length > 0 && (
           <div className={styles.postTags}>
-            {post.tags!.map((tag) => (
+            {post.tags.map((tag: string) => (
               <span key={tag} className={styles.postTag}>
                 #{tag}
               </span>

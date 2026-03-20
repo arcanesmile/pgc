@@ -1,7 +1,7 @@
 // app/login/page.tsx
 "use client";
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { auth } from '@/firebase/firebaseConfig';
 import { onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import Link from 'next/link';
@@ -10,7 +10,6 @@ import styles from './loginPage.module.css';
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,12 +18,12 @@ export default function LoginPage() {
 
   // Check for success message from registration redirect
   useEffect(() => {
-    if (searchParams.get('registered') === 'true') {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('registered') === 'true') {
       setSuccess('Registration successful! Please log in.');
-      // Clear the query param without reloading
       router.replace('/login');
     }
-  }, [searchParams, router]);
+  }, [router]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -154,7 +153,7 @@ export default function LoginPage() {
         </div>
 
         <div className={styles.links}>
-          <p>Don't have an account?{' '}
+          <p>Don&apos;t have an account?{' '}
             <Link href="/register" className={styles.link}>
               Register here
             </Link>

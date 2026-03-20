@@ -1,8 +1,24 @@
 import Newsletter from "@/components/NewsletterCTA/NewsletterCTA";
+import Image from "next/image";
 import ErrorState from "./ErrorState"; // New client component
 import styles from "./blogPage.module.css";
 
-async function getPosts() {
+export const dynamic = "force-dynamic";
+
+type BlogPost = {
+  id: string;
+  title?: string;
+  slug: string;
+  excerpt?: string;
+  date?: string;
+  coverImage?: string | null;
+  tags?: string[];
+  author?: string;
+  readTime?: string;
+  featured?: boolean;
+};
+
+async function getPosts(): Promise<BlogPost[]> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog`, {
     cache: "no-store",
   });
@@ -35,8 +51,8 @@ function formatDate(dateString: string): string {
 }
 
 export default async function BlogPage() {
-  let posts = [];
-  let error = null;
+  let posts: BlogPost[] = [];
+  let error: unknown = null;
   
   try {
     posts = await getPosts();
@@ -47,8 +63,8 @@ export default async function BlogPage() {
   }
 
   // Separate featured and regular posts
-  const featuredPosts = posts.filter((post: any) => post.featured === true);
-  const regularPosts = posts.filter((post: any) => !post.featured || post.featured === false);
+  const featuredPosts = posts.filter((post) => post.featured === true);
+  const regularPosts = posts.filter((post) => post.featured !== true);
 
   if (error) {
     return (
@@ -93,7 +109,7 @@ export default async function BlogPage() {
           </div>
           
           <div className={styles.featuredGrid}>
-            {featuredPosts.map((post: any) => (
+            {featuredPosts.map((post) => (
               <FeaturedPostCard key={post.id} post={post} />
             ))}
           </div>
@@ -117,7 +133,7 @@ export default async function BlogPage() {
           <div className={styles.emptyState}>
             <div className={styles.emptyIcon}>📝</div>
             <h3>No Articles Yet</h3>
-            <p>We're working on creating amazing content. Check back soon!</p>
+            <p>We&apos;re working on creating amazing content. Check back soon!</p>
           </div>
         ) : regularPosts.length === 0 && featuredPosts.length > 0 ? (
           <div className={styles.emptyState}>
@@ -127,7 +143,7 @@ export default async function BlogPage() {
           </div>
         ) : (
           <div className={styles.postsGrid}>
-            {regularPosts.map((post: any) => (
+            {regularPosts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
@@ -141,18 +157,20 @@ export default async function BlogPage() {
 }
 
 // Featured Post Card Component
-function FeaturedPostCard({ post }: { post: any }) {
+function FeaturedPostCard({ post }: { post: BlogPost }) {
   const readingTime = post.readTime || `${calculateReadingTime(post.excerpt)} min read`;
   
   return (
     <article className={styles.featuredCard}>
       {post.coverImage && (
         <div className={styles.featuredImageContainer}>
-          <img 
-            src={post.coverImage} 
-            alt={post.title}
+          <Image
+            src={post.coverImage}
+            alt={post.title || "Featured article cover"}
             className={styles.featuredImage}
-            loading="lazy"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+            priority={false}
           />
           <div className={styles.featuredBadge}>
             <span className={styles.badgeIcon}>⭐</span>
@@ -164,8 +182,8 @@ function FeaturedPostCard({ post }: { post: any }) {
       <div className={styles.featuredContent}>
         <div className={styles.featuredMeta}>
           <div className={styles.metaLeft}>
-            <time className={styles.date} dateTime={post.date}>
-              {formatDate(post.date)}
+            <time className={styles.date} dateTime={post.date ?? ''}>
+              {post.date ? formatDate(post.date) : 'Date not set'}
             </time>
             <span className={styles.readTime}>
               <span className={styles.clockIcon}>⏱️</span>
@@ -212,18 +230,20 @@ function FeaturedPostCard({ post }: { post: any }) {
 }
 
 // Regular Post Card Component
-function PostCard({ post }: { post: any }) {
+function PostCard({ post }: { post: BlogPost }) {
   const readingTime = post.readTime || `${calculateReadingTime(post.excerpt)} min read`;
   
   return (
     <article className={styles.postCard}>
       {post.coverImage && (
         <div className={styles.postImageContainer}>
-          <img 
-            src={post.coverImage} 
-            alt={post.title}
+          <Image
+            src={post.coverImage}
+            alt={post.title || "Post cover"}
             className={styles.postImage}
-            loading="lazy"
+            fill
+            sizes="(max-width: 768px) 100vw, 420px"
+            priority={false}
           />
           {post.featured && (
             <div className={styles.postBadge}>
@@ -236,8 +256,8 @@ function PostCard({ post }: { post: any }) {
       
       <div className={styles.postContent}>
         <div className={styles.postMeta}>
-          <time className={styles.date} dateTime={post.date}>
-            {formatDate(post.date)}
+          <time className={styles.date} dateTime={post.date ?? ''}>
+            {post.date ? formatDate(post.date) : 'Date not set'}
           </time>
           <span className={styles.divider}>•</span>
           <span className={styles.readTime}>
