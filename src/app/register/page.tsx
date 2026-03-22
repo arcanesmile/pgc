@@ -33,6 +33,9 @@ export default function RegisterPage() {
 
     try {
       setIsLoading(true);
+      if (!auth) {
+        throw new Error('Authentication is not configured.');
+      }
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCred.user;
 

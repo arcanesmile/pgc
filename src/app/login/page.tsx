@@ -26,6 +26,7 @@ export default function LoginPage() {
   }, [router]);
 
   useEffect(() => {
+    if (!auth) return;
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setSuccess('Login successful! Redirecting...');
@@ -42,6 +43,9 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
+      if (!auth) {
+        throw new Error('Authentication is not configured.');
+      }
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.error(err);
@@ -66,6 +70,9 @@ export default function LoginPage() {
       setError('');
       setSuccess('');
       setIsLoading(true);
+      if (!auth) {
+        throw new Error('Authentication is not configured.');
+      }
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
     } catch (err) {

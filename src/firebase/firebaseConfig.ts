@@ -1,5 +1,5 @@
-import { initializeApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, FirebaseApp } from "firebase/app";
+import { getAuth, Auth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,7 +11,17 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const isBrowser = typeof window !== "undefined";
+const hasAllConfig = Object.values(firebaseConfig).every(Boolean);
+
+let app: FirebaseApp | undefined;
+let auth: Auth | null = null;
+
+if (isBrowser && hasAllConfig) {
+  app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  auth = getAuth(app);
+} else if (isBrowser && !hasAllConfig) {
+  console.warn("Firebase client config is incomplete; auth disabled.");
+}
 
 export { app, auth };

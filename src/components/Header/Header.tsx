@@ -19,6 +19,7 @@ export default function Header() {
   
 
   useEffect(() => {
+    if (!auth) return;
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
     });
@@ -26,6 +27,10 @@ export default function Header() {
   }, []);
 
   const handleSignOut = async () => {
+    if (!auth) {
+      console.warn('Auth not configured; cannot sign out.');
+      return;
+    }
     try {
       await signOut(auth);
       router.push('/login');
